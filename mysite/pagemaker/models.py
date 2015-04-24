@@ -23,7 +23,7 @@ def get_video_path(instance, filename):
 class WebPage(models.Model):
     base = models.CharField(max_length=127, blank=True)    # base template
     title = models.CharField(max_length=127)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def __unicode__(self):
         return self.title
@@ -36,7 +36,6 @@ class WebPage(models.Model):
 class Gadgets(models.Model):
 
     GADGET_TYPE_CHOICES = (
-        ('0', 'Menu'),
         ('1', 'Carousel'),
         ('2', 'MediaFeature'),
         ('3', 'HeadingIcons'),

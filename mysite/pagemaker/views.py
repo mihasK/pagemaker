@@ -11,7 +11,7 @@ def demo(request):
     return render(request, 'demo.html')
 
 class WebPageListView(CreateView):
-    form_class = WebPageCreateForm
+    form_class = WebPageAddForm
     template_name = 'webpage_list.html'
     success_url = '/'
 
@@ -24,3 +24,20 @@ class WebPageListView(CreateView):
 class WebPageEditView(TemplateView):
     template_name = 'webpage_edit.html'
 
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['slug']
+        context = super(WebPageEditView, self).get_context_data(**kwargs)
+        context['webpage'] = WebPage.objects.get(slug=slug)
+        return context
+
+
+class CarouselAddView(CreateView):
+    form_class = CarouselAddForm
+    template_name = 'carousel_add.html'
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['slug']
+        context = super(CarouselAddView, self).get_context_data(**kwargs)
+        context['webpage'] = WebPage.objects.get(slug=slug)
+        return context
