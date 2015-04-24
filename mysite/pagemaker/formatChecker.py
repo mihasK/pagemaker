@@ -50,4 +50,4 @@ add_introspection_rules([(
                               'content_types': ['content_types',{'default':None}],
                               'max_upload_size': ['max_upload_size',{'default':None}],
                             }
-                         )],["^course_edit\.formatChecker\.ContentTypeRestrictedFileField"])
+                         )],["^pagemaker\.formatChecker\.ContentTypeRestrictedFileField"])
