@@ -13,8 +13,10 @@ def demo(request):
 class WebPageListView(CreateView):
     form_class = WebPageCreateForm
     template_name = 'webpage_list.html'
+    success_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super(WebPageListView, self).get_context_data(**kwargs)
         context['webpages'] = WebPage.objects.all()
         return context
+
