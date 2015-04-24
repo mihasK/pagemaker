@@ -40,13 +40,13 @@ class Menu(models.Model):
 class MenuItem(models.Model):
     title = models.CharField(max_length=56)
     url = models.URLField()
-    sequence = models.IntegerField() #order to display menu item
+    sequence = models.IntegerField(unique=True) #order to display menu item
     menu = models.ForeignKey(Menu, related_name = 'Item')
 
 
 class Carousel(models.Model):
     title = models.CharField(max_length=127, blank=False)
-    order = models.IntegerField() #order of display on webpage
+    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='Carousel')
 
 
@@ -68,7 +68,7 @@ class Slide(models.Model):
     bg_image =  ContentTypeRestrictedFileField(upload_to=get_image_path, blank=True,
                   max_upload_size = 5000000,content_types= settings.SUPPORTED_IMAGE_MIME_TYPES)
 
-    sequence = models.IntegerField() #order of display inside carousel
+    sequence = models.IntegerField(unique=True) #order of display inside carousel
     carousel = models.ForeignKey(Carousel, related_name = 'Slide')
 
 
@@ -85,7 +85,7 @@ class MediaFeature(models.Model):
     embedded_video = EmbedVideoField(blank=True)
     left_media = models.BooleanField(default=False) # display image/video on left side
 
-    order = models.IntegerField() #order of display on webpage
+    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='MediaFeature')
 
 
@@ -102,7 +102,7 @@ class HeadingIcons(models.Model):
     description3 = models.TextField(blank=True)
     icon3 = models.CharField(max_length=127, blank=True)
 
-    order = models.IntegerField() #order of display on webpage
+    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='HeadingIcons')
 
 
