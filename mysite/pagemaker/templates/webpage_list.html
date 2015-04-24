@@ -1,0 +1,36 @@
+{% extends '__base.html' %}
+{% load bootstrap %}
+
+
+{% block left_sidebar %}
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>Webpages</li>
+                {% for webpage in webpages %}
+                <li>
+                    <a href="#">{{webpage}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+        </div>
+
+{% endblock left_sidebar %}
+
+
+{% block main_content_area %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <form action="{% url 'webpage.list' %}" method="POST">
+                    {% csrf_token %}
+                    {{ form | bootstrap }}
+                    <input type="submit" class="button" value="Submit"/>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock main_content_area %}

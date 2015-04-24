@@ -8,10 +8,10 @@ from .formatChecker import ContentTypeRestrictedFileField
 
 
 def get_media_image_path(instance, filename):#todo rmw: there has to be a better way
-    return os.path.join(str(instance.school.pk), 'images', str(instance.pk),filename)
+    return os.path.join(str(instance.webpage.pk), 'images', str(instance.pk),filename)
 
 def get_media_video_path(instance, filename):
-    return os.path.join(str(instance.school.pk), 'videos',  str(instance.pk),filename)
+    return os.path.join(str(instance.webpage.pk), 'videos',  str(instance.pk),filename)
 
 def get_image_path(instance, filename):#todo rmw: there has to be a better way
     return os.path.join(str(instance.pk), 'images',filename)

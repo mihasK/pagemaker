@@ -1,10 +1,20 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import CreateView
+
+from pagemaker.forms import *
+from pagemaker.models import *
 
 
 # Create your views here.
 def demo(request):
-   return render(request, 'demo.html')
+    return render(request, 'demo.html')
 
-def main(request):
-   return render(request, 'main.html', {'school':0})
+class WebPageListView(CreateView):
+    form_class = WebPageCreateForm
+    template_name = 'webpage_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(WebPageListView, self).get_context_data(**kwargs)
+        context['webpages'] = WebPage.objects.all()
+        return context
