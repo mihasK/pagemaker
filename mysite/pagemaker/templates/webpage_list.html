@@ -9,7 +9,7 @@
                 <li>Webpages</li>
                 {% for webpage in webpages %}
                 <li>
-                    <a href="#">{{webpage}}</a>
+                    <a href="{% url 'webpage.edit' webpage %}">{{webpage.title}}</a>
                 </li>
                 {% endfor %}
             </ul>

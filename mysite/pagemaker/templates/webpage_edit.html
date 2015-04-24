@@ -1,0 +1,43 @@
+{% extends '__base.html' %}
+{% load bootstrap %}
+
+
+{% block left_sidebar %}
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>Gadgets</li>
+                <li>
+                    <a href="">Add New</a>
+                </li>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a href="#">Instructors<span class="fa arrow"></span></a>
+                        <ul class="nav nav-third-level">
+                            <li>
+                                <a href="#">List</a>
+                            </li>
+                            <li>
+                                <a href="#">Add</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+        </div>
+
+{% endblock left_sidebar %}
+
+
+{% block main_content_area %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock main_content_area %}

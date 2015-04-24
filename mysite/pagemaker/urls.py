@@ -6,4 +6,5 @@ urlpatterns = patterns('pagemaker.views',
     # Examples:
     url(r'^demo/$', 'demo', name='demo'),
     url(r'^$', WebPageListView.as_view(), name='webpage.list'),
+    url(r'^(?P<slug>[-\w]+)/$', WebPageEditView.as_view(), name='webpage.edit'),
 )
