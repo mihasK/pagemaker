@@ -32,6 +32,22 @@ class WebPage(models.Model):
         self.slug = slugify(self.title)
         super(WebPage, self).save(*args, **kwargs)
 
+
+class Gadgets(models.Model):
+
+    GADGET_TYPE_CHOICES = (
+        ('0', 'Menu'),
+        ('1', 'Carousel'),
+        ('2', 'MediaFeature'),
+        ('3', 'HeadingIcons'),
+    )
+
+    webpage = models.OneToOneField(WebPage)
+    ident = models.IntegerField()
+    type = models.CharField(max_length=1, choices=GADGET_TYPE_CHOICES)
+    order = models.IntegerField(unique=True)
+
+
 class Menu(models.Model):
     title = models.CharField(max_length=127)
     webpage = models.ForeignKey(WebPage, related_name='Menu')
@@ -46,7 +62,6 @@ class MenuItem(models.Model):
 
 class Carousel(models.Model):
     title = models.CharField(max_length=127, blank=False)
-    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='Carousel')
 
 
@@ -85,7 +100,6 @@ class MediaFeature(models.Model):
     embedded_video = EmbedVideoField(blank=True)
     left_media = models.BooleanField(default=False) # display image/video on left side
 
-    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='MediaFeature')
 
 
@@ -102,7 +116,6 @@ class HeadingIcons(models.Model):
     description3 = models.TextField(blank=True)
     icon3 = models.CharField(max_length=127, blank=True)
 
-    order = models.IntegerField(unique=True) #order of display on webpage
     webpage = models.ForeignKey(WebPage, related_name='HeadingIcons')
 
 

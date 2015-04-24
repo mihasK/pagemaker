@@ -10,10 +10,7 @@
                     <a href="">Add New Gadget<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="#">Menu</a>
-                        </li>
-                        <li>
-                            <a href="#">Slider</a>
+                            <a href="#">Carousel</a>
                         </li>
                         <li>
                             <a href="#">HeadingIcons</a>
@@ -23,7 +20,18 @@
                         </li>
                     </ul>
                 </li>
-                <li>Current Gadgets</li>
+                <li><a href="">Current Gadgets<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="#">Menu</a>
+                        </li>
+                        {% for gadget in gadgets %}
+                        <li>
+                            <a href="">{{ gadget.type }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->
