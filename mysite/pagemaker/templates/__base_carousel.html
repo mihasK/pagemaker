@@ -1,0 +1,44 @@
+{% extends '__base.html' %}
+{% load bootstrap %}
+
+
+{% block left_sidebar %}
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav navbar-collapse">
+            <ul class="nav" id="side-menu">
+                <li>
+                    <a href="{% url 'webpage.edit' webpage.slug %}">{{ Webpage.title }}</a>
+                </li>
+                <li>
+                    <a href="">Add New Slide</a>
+                </li>
+                <li><a href="">Current Slides<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        {% for slide in slides %}
+                        <li>
+                            <a href=""></a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+                <li>
+                    <a href="{% url 'carousel.delete' webpage.slug %}">Delete</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.sidebar-collapse -->
+        </div>
+
+{% endblock left_sidebar %}
+
+
+{% block main_content_area %}
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+            </div>
+        </div>
+    </div>
+
+{% endblock main_content_area %}
