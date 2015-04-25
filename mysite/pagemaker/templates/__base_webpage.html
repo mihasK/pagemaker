@@ -7,6 +7,9 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
+                    <a href="{% url 'webpage.list' %}">Webpages</a>
+                </li>
+                <li>
                     <a href="">Add New Gadget<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
@@ -31,6 +34,9 @@
                         </li>
                         {% endfor %}
                     </ul>
+                </li>
+                <li>
+                    <a href="{% url 'webpage.delete' webpage.slug %}">Delete</a>
                 </li>
             </ul>
         </div>
