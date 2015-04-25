@@ -24,6 +24,7 @@ class WebPageListView(CreateView):
 class WebPageDeleteView(DeleteView):
     model = WebPage
     success_url = reverse_lazy('webpage.list')
+    template_name = 'webpage_confirm_delete.html'
 
 
 class WebPageEditView(TemplateView):
@@ -37,6 +38,7 @@ class WebPageEditView(TemplateView):
 
 
 class CarouselAddView(CreateView):
+    model = Carousel
     form_class = CarouselAddForm
     template_name = 'carousel_add.html'
 
@@ -53,4 +55,4 @@ class CarouselAddView(CreateView):
         return super(CarouselAddView, self).form_invalid(form)
 
     def get_success_url(self):
-        return reverse('webpage.edit', kwargs={'slug':slug})
+        return reverse_lazy('webpage.edit', kwargs={'slug':slug})
