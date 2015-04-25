@@ -68,7 +68,7 @@ class CarouselAddView(CreateView):
 
         Gadgets.objects.create(webpage_id=self.webpage.id,
                                identifier=obj.pk,
-                               type='2',
+                               type='1',
                                order = myorder,
                                )
 

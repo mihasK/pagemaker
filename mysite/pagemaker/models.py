@@ -41,7 +41,7 @@ class Gadgets(models.Model):
         ('3', 'HeadingIcons'),
     )
 
-    webpage = models.OneToOneField(WebPage)
+    webpage = models.ForeignKey(WebPage)
     identifier = models.IntegerField()
     type = models.CharField(max_length=1, choices=GADGET_TYPE_CHOICES)
     order = models.IntegerField(unique=True)
