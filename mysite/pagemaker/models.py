@@ -42,7 +42,7 @@ class Gadgets(models.Model):
     )
 
     webpage = models.OneToOneField(WebPage)
-    ident = models.IntegerField()
+    identifier = models.IntegerField()
     type = models.CharField(max_length=1, choices=GADGET_TYPE_CHOICES)
     order = models.IntegerField(unique=True)
 
