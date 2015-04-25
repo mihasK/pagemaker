@@ -35,7 +35,9 @@ class WebPageEditView(TemplateView):
     def get_context_data(self, **kwargs):
         slug = self.kwargs['slug']
         context = super(WebPageEditView, self).get_context_data(**kwargs)
-        context['webpage'] = WebPage.objects.get(slug=slug)
+        webpage = WebPage.objects.get(slug=slug)
+        context['webpage'] = webpage
+        context['gadgets'] = Gadgets.objects.filter(webpage=webpage)
         return context
 
 
@@ -68,7 +70,7 @@ class CarouselAddView(CreateView):
 
         Gadgets.objects.create(webpage_id=self.webpage.id,
                                identifier=obj.pk,
-                               type='1',
+                               type='Carousel',
                                order = myorder,
                                )
 

@@ -34,16 +34,9 @@ class WebPage(models.Model):
 
 
 class Gadgets(models.Model):
-
-    GADGET_TYPE_CHOICES = (
-        ('1', 'Carousel'),
-        ('2', 'MediaFeature'),
-        ('3', 'HeadingIcons'),
-    )
-
     webpage = models.ForeignKey(WebPage)
     identifier = models.IntegerField()
-    type = models.CharField(max_length=1, choices=GADGET_TYPE_CHOICES)
+    type = models.CharField(max_length=56)
     order = models.IntegerField(unique=True)
 
 
