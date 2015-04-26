@@ -35,13 +35,13 @@ class WebPage(models.Model):
 
 class Gadgets(models.Model):
     GADGET_CHOICES = (
-        ('carousel', 'Carousel'),
-        ('headingicons', 'HeadingIcons'),
-        ('mediafeature', 'MediaFeature'),
+        ('Carousel', 'Carousel'),
+        ('HeadingIcons', 'HeadingIcons'),
+        ('MediaFeature', 'MediaFeature'),
     )
 
     webpage = models.ForeignKey(WebPage)
-    identifier = models.IntegerField()
+    identifier = models.IntegerField() # pk for gadget
     type = models.CharField(max_length=32, choices=GADGET_CHOICES)
     order = models.IntegerField(unique=True)
 

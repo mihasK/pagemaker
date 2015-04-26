@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.db.models import Max
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, DeleteView, FormView, TemplateView
+from django.views.generic import CreateView, DeleteView, UpdateView, TemplateView
 
 from pagemaker.forms import *
 from pagemaker.models import *
@@ -79,3 +79,16 @@ class CarouselAddView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('webpage.edit', kwargs={'slug':self.slug})
+
+
+class CarouselEditView(UpdateView):
+    model = Carousel
+    fields = ['title']
+    form_class = CarouselAddForm
+    template_name = 'carousel_edit.html'
+
+    def get_context_data(self, **kwargs):
+        pk = self.kwargs['pk']
+        context = super(CarouselEditView, self).get_context_data(**kwargs)
+        context['webpage'] = Carousel.objects.get(pk=pk).webpage
+        return context
