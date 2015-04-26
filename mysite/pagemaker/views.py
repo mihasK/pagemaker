@@ -52,7 +52,7 @@ class CarouselAddView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CarouselAddView, self).get_context_data(**kwargs)
-        context['webpage'] = get_object_or_404(WebPage, slug=self.slug)
+        context['webpage'] = self.webpage
         return context
 
     @atomic

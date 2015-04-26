@@ -45,6 +45,9 @@ class Gadgets(models.Model):
     type = models.CharField(max_length=32, choices=GADGET_CHOICES)
     order = models.IntegerField(unique=True)
 
+    class Meta:
+        unique_together = ('webpage', 'order')
+
 
 class Menu(models.Model):
     title = models.CharField(max_length=127)
