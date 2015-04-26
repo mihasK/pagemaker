@@ -13,7 +13,7 @@
                     <a href="">Add New Gadget<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{% url 'Carousel.add' webpage.slug %}">Carousel</a>
+                            <a href="{% url 'Carousel.add' webpage.pk %}">Carousel</a>
                         </li>
                         <li>
                             <a href="#">HeadingIcons</a>
@@ -28,7 +28,7 @@
                         <li>
                             <a href="#">Menu</a>
                         </li>
-                        {% for gadget in webpage.gadgets_set.all %}
+                        {% for gadget in object.gadgets_set.all %}
                         <li>
                             <a href="{% url gadget.type|add:".edit" gadget.identifier %}">{{ gadget.type }}</a>
                         </li>
@@ -36,7 +36,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="{% url 'webpage.delete' webpage.slug %}">Delete</a>
+                    <a href="{% url 'webpage.delete' webpage.pk %}">Delete</a>
                 </li>
             </ul>
         </div>

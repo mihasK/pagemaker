@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.db.models import Max
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import CreateView, DeleteView, UpdateView, TemplateView
+from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, TemplateView
 
 from pagemaker.forms import *
 from pagemaker.models import *
@@ -30,15 +30,9 @@ class WebPageDeleteView(DeleteView):
     template_name = 'webpage_confirm_delete.html'
 
 
-class WebPageEditView(TemplateView):
+class WebPageEditView(DetailView):
+    model = WebPage
     template_name = 'webpage_edit.html'
-
-    def get_context_data(self, **kwargs):
-        slug = self.kwargs['slug']
-        context = super(WebPageEditView, self).get_context_data(**kwargs)
-        webpage = get_object_or_404(WebPage, slug=slug)
-        context['webpage'] = webpage
-        return context
 
 
 class CarouselAddView(CreateView):
@@ -46,8 +40,8 @@ class CarouselAddView(CreateView):
     template_name = 'carousel_add.html'
 
     def dispatch(self, request, *args, **kwargs):
-        self.slug = self.kwargs['slug']
-        self.webpage = get_object_or_404(WebPage, slug=self.slug)
+        self.pk = self.kwargs['pk']
+        self.webpage = get_object_or_404(WebPage, pk=self.pk)
         return super(CarouselAddView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -78,7 +72,7 @@ class CarouselAddView(CreateView):
 
 
     def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'slug':self.slug})
+        return reverse_lazy('webpage.edit', kwargs={'pk':self.pk})
 
 
 class CarouselEditView(UpdateView):
@@ -86,12 +80,6 @@ class CarouselEditView(UpdateView):
     fields = ['title']
     form_class = CarouselAddForm
     template_name = 'carousel_edit.html'
-
-    def get_context_data(self, **kwargs):
-        pk = self.kwargs['pk']
-        context = super(CarouselEditView, self).get_context_data(**kwargs)
-        context['Carousel'] = get_object_or_404(Carousel,pk=pk)
-        return context
 
     def get_success_url(self):
         return reverse_lazy('Carousel.edit', kwargs={'pk':self.kwargs['pk']})
