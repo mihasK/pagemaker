@@ -33,25 +33,17 @@ class WebPage(models.Model):
         super(WebPage, self).save(*args, **kwargs)
 
 
-class Gadgets(models.Model):
-    GADGET_CHOICES = (
-        ('Carousel', 'Carousel'),
-        ('HeadingIcons', 'HeadingIcons'),
-        ('MediaFeature', 'MediaFeature'),
-    )
-
+class Gadget(models.Model):
     webpage = models.ForeignKey(WebPage)
-    identifier = models.IntegerField() # pk for gadget
-    type = models.CharField(max_length=32, choices=GADGET_CHOICES)
-    order = models.IntegerField()
+    order = models.IntegerField(null=True, blank=True)
 
     class Meta:
-        unique_together = ('webpage', 'order')
+        abstract = True
+        #unique_together = ('webpage', 'order')
 
 
-class Menu(models.Model):
+class Menu(Gadget):
     title = models.CharField(max_length=127)
-    webpage = models.ForeignKey(WebPage, related_name='Menu')
 
 
 class MenuItem(models.Model):
@@ -61,9 +53,8 @@ class MenuItem(models.Model):
     menu = models.ForeignKey(Menu, related_name = 'Item')
 
 
-class Carousel(models.Model):
+class Carousel(Gadget):
     title = models.CharField(max_length=127, blank=False)
-    webpage = models.ForeignKey(WebPage, related_name='Carousel')
 
 
 class Slide(models.Model):
@@ -88,7 +79,7 @@ class Slide(models.Model):
     carousel = models.ForeignKey(Carousel, related_name = 'Slide')
 
 
-class MediaFeature(models.Model):
+class MediaFeature(Gadget):
     title = models.CharField(max_length=127, blank=True)
     description = models.TextField(blank=True)
 
@@ -101,10 +92,9 @@ class MediaFeature(models.Model):
     embedded_video = EmbedVideoField(blank=True)
     left_media = models.BooleanField(default=False) # display image/video on left side
 
-    webpage = models.ForeignKey(WebPage, related_name='MediaFeature')
 
 
-class HeadingIcons(models.Model):
+class HeadingIcons(Gadget):
     title = models.CharField(max_length=127, blank=True)
     description = models.TextField(blank=True)
     icon = models.CharField(max_length=127, blank=True)
@@ -117,7 +107,6 @@ class HeadingIcons(models.Model):
     description2 = models.TextField(blank=True)
     icon2 = models.CharField(max_length=127, blank=True)
 
-    webpage = models.ForeignKey(WebPage, related_name='HeadingIcons')
 
 
 

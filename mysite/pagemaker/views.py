@@ -53,27 +53,11 @@ class CarouselAddView(CreateView):
         context['webpage'] = self.webpage
         return context
 
-    @atomic
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.webpage_id = self.webpage.id
-        form_valid_result = super(CarouselAddView, self).form_valid(form)
-
-        # add to gadgets list
-        last_gadget = Gadgets.objects.filter(webpage_id=self.webpage.id).aggregate(Max('order'))
-        try:
-            myorder = last_gadget['order__max']+1
-        except:
-            myorder = 1
-
-        Gadgets.objects.create(webpage_id=self.webpage.id,
-                               identifier=obj.pk,
-                               type='Carousel',
-                               order = myorder,
-                               )
-
-        return form_valid_result
-
+        obj.webpage_id = self.kwargs['pk']
+        obj.order = 0
+        return super(CarouselAddView, self).form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('webpage.edit', kwargs={'pk':self.pk})

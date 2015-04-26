@@ -8,70 +8,63 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Deleting field 'HeadingIcons.title3'
-        db.delete_column(u'pagemaker_headingicons', 'title3')
+        # Removing unique constraint on 'Menu', fields ['webpage', 'order']
+        db.delete_unique(u'pagemaker_menu', ['webpage_id', 'order'])
 
-        # Deleting field 'HeadingIcons.description3'
-        db.delete_column(u'pagemaker_headingicons', 'description3')
+        # Removing unique constraint on 'HeadingIcons', fields ['webpage', 'order']
+        db.delete_unique(u'pagemaker_headingicons', ['webpage_id', 'order'])
 
-        # Deleting field 'HeadingIcons.icon3'
-        db.delete_column(u'pagemaker_headingicons', 'icon3')
+        # Removing unique constraint on 'Carousel', fields ['webpage', 'order']
+        db.delete_unique(u'pagemaker_carousel', ['webpage_id', 'order'])
 
-        # Adding field 'HeadingIcons.title'
-        db.add_column(u'pagemaker_headingicons', 'title',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=127, blank=True),
-                      keep_default=False)
+        # Removing unique constraint on 'MediaFeature', fields ['webpage', 'order']
+        db.delete_unique(u'pagemaker_mediafeature', ['webpage_id', 'order'])
 
-        # Adding field 'HeadingIcons.description'
-        db.add_column(u'pagemaker_headingicons', 'description',
-                      self.gf('django.db.models.fields.TextField')(default='', blank=True),
-                      keep_default=False)
 
-        # Adding field 'HeadingIcons.icon'
-        db.add_column(u'pagemaker_headingicons', 'icon',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=127, blank=True),
-                      keep_default=False)
+        # Changing field 'MediaFeature.order'
+        db.alter_column(u'pagemaker_mediafeature', 'order', self.gf('django.db.models.fields.IntegerField')(null=True))
 
+        # Changing field 'Carousel.order'
+        db.alter_column(u'pagemaker_carousel', 'order', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'HeadingIcons.order'
+        db.alter_column(u'pagemaker_headingicons', 'order', self.gf('django.db.models.fields.IntegerField')(null=True))
+
+        # Changing field 'Menu.order'
+        db.alter_column(u'pagemaker_menu', 'order', self.gf('django.db.models.fields.IntegerField')(null=True))
 
     def backwards(self, orm):
-        # Adding field 'HeadingIcons.title3'
-        db.add_column(u'pagemaker_headingicons', 'title3',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=127, blank=True),
-                      keep_default=False)
 
-        # Adding field 'HeadingIcons.description3'
-        db.add_column(u'pagemaker_headingicons', 'description3',
-                      self.gf('django.db.models.fields.TextField')(default='', blank=True),
-                      keep_default=False)
+        # Changing field 'MediaFeature.order'
+        db.alter_column(u'pagemaker_mediafeature', 'order', self.gf('django.db.models.fields.IntegerField')(default=0))
+        # Adding unique constraint on 'MediaFeature', fields ['webpage', 'order']
+        db.create_unique(u'pagemaker_mediafeature', ['webpage_id', 'order'])
 
-        # Adding field 'HeadingIcons.icon3'
-        db.add_column(u'pagemaker_headingicons', 'icon3',
-                      self.gf('django.db.models.fields.CharField')(default='', max_length=127, blank=True),
-                      keep_default=False)
 
-        # Deleting field 'HeadingIcons.title'
-        db.delete_column(u'pagemaker_headingicons', 'title')
+        # Changing field 'Carousel.order'
+        db.alter_column(u'pagemaker_carousel', 'order', self.gf('django.db.models.fields.IntegerField')(default=0))
+        # Adding unique constraint on 'Carousel', fields ['webpage', 'order']
+        db.create_unique(u'pagemaker_carousel', ['webpage_id', 'order'])
 
-        # Deleting field 'HeadingIcons.description'
-        db.delete_column(u'pagemaker_headingicons', 'description')
 
-        # Deleting field 'HeadingIcons.icon'
-        db.delete_column(u'pagemaker_headingicons', 'icon')
+        # Changing field 'HeadingIcons.order'
+        db.alter_column(u'pagemaker_headingicons', 'order', self.gf('django.db.models.fields.IntegerField')(default=0))
+        # Adding unique constraint on 'HeadingIcons', fields ['webpage', 'order']
+        db.create_unique(u'pagemaker_headingicons', ['webpage_id', 'order'])
+
+
+        # Changing field 'Menu.order'
+        db.alter_column(u'pagemaker_menu', 'order', self.gf('django.db.models.fields.IntegerField')(default=0))
+        # Adding unique constraint on 'Menu', fields ['webpage', 'order']
+        db.create_unique(u'pagemaker_menu', ['webpage_id', 'order'])
 
 
     models = {
         u'pagemaker.carousel': {
             'Meta': {'object_name': 'Carousel'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '127'}),
-            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'Carousel'", 'to': u"orm['pagemaker.WebPage']"})
-        },
-        u'pagemaker.gadgets': {
-            'Meta': {'unique_together': "(('webpage', 'order'),)", 'object_name': 'Gadgets'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'identifier': ('django.db.models.fields.IntegerField', [], {}),
-            'order': ('django.db.models.fields.IntegerField', [], {}),
-            'type': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
             'webpage': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pagemaker.WebPage']"})
         },
         u'pagemaker.headingicons': {
@@ -83,10 +76,11 @@ class Migration(SchemaMigration):
             'icon1': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
             'icon2': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
             'title1': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
             'title2': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
-            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'HeadingIcons'", 'to': u"orm['pagemaker.WebPage']"})
+            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pagemaker.WebPage']"})
         },
         u'pagemaker.mediafeature': {
             'Meta': {'object_name': 'MediaFeature'},
@@ -95,16 +89,18 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'image': ('pagemaker.formatChecker.ContentTypeRestrictedFileField', [], {'content_types': "['image/png', 'image/gif', 'image/jpeg', 'image/pjpeg']", 'max_upload_size': '5000000', 'max_length': '100', 'blank': 'True'}),
             'left_media': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '127', 'blank': 'True'}),
             'video': ('pagemaker.formatChecker.ContentTypeRestrictedFileField', [], {'default': "'static/default/default.ogv'", 'max_upload_size': '50242880', 'max_length': '100', 'content_types': "['video/quicktime', 'video/mpeg', 'video/mp4', 'video/avi', 'video/x-ms-wmv', 'video/x-flv', 'video/3gpp', 'video/webm', 'video/ogg']", 'blank': 'True'}),
             'video_needs_transcode': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'MediaFeature'", 'to': u"orm['pagemaker.WebPage']"})
+            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pagemaker.WebPage']"})
         },
         u'pagemaker.menu': {
             'Meta': {'object_name': 'Menu'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'order': ('django.db.models.fields.IntegerField', [], {'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '127'}),
-            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'Menu'", 'to': u"orm['pagemaker.WebPage']"})
+            'webpage': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['pagemaker.WebPage']"})
         },
         u'pagemaker.menuitem': {
             'Meta': {'object_name': 'MenuItem'},
