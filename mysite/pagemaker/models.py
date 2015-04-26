@@ -105,6 +105,10 @@ class MediaFeature(models.Model):
 
 
 class HeadingIcons(models.Model):
+    title = models.CharField(max_length=127, blank=True)
+    description = models.TextField(blank=True)
+    icon = models.CharField(max_length=127, blank=True)
+
     title1 = models.CharField(max_length=127, blank=True)
     description1 = models.TextField(blank=True)
     icon1 = models.CharField(max_length=127, blank=True)
@@ -112,10 +116,6 @@ class HeadingIcons(models.Model):
     title2 = models.CharField(max_length=127, blank=True)
     description2 = models.TextField(blank=True)
     icon2 = models.CharField(max_length=127, blank=True)
-
-    title3 = models.CharField(max_length=127, blank=True)
-    description3 = models.TextField(blank=True)
-    icon3 = models.CharField(max_length=127, blank=True)
 
     webpage = models.ForeignKey(WebPage, related_name='HeadingIcons')
 

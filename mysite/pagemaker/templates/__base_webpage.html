@@ -30,7 +30,7 @@
                         </li>
                         {% for gadget in object.gadgets_set.all %}
                         <li>
-                            <a href="{% url gadget.type|add:".edit" gadget.identifier %}">{{ gadget.type }}</a>
+                            <a href="{% url gadget.type|add:".edit" gadget.identifier %}">{{ gadget.type }} - {{ gadget.title }}</a>
                         </li>
                         {% endfor %}
                     </ul>
