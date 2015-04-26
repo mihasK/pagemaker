@@ -43,7 +43,7 @@ class Gadgets(models.Model):
     webpage = models.ForeignKey(WebPage)
     identifier = models.IntegerField() # pk for gadget
     type = models.CharField(max_length=32, choices=GADGET_CHOICES)
-    order = models.IntegerField(unique=True)
+    order = models.IntegerField()
 
     class Meta:
         unique_together = ('webpage', 'order')
