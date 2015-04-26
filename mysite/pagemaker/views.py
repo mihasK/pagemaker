@@ -13,6 +13,7 @@ def demo(request):
     return render(request, 'demo.html')
 
 class WebPageListView(CreateView):
+    model = WebPage
     form_class = WebPageAddForm
     template_name = 'webpage_list.html'
     success_url = '/'
@@ -35,9 +36,8 @@ class WebPageEditView(TemplateView):
     def get_context_data(self, **kwargs):
         slug = self.kwargs['slug']
         context = super(WebPageEditView, self).get_context_data(**kwargs)
-        webpage = WebPage.objects.get(slug=slug)
+        webpage = get_object_or_404(WebPage, slug=slug)
         context['webpage'] = webpage
-        context['gadgets'] = Gadgets.objects.filter(webpage=webpage)
         return context
 
 
@@ -52,7 +52,7 @@ class CarouselAddView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CarouselAddView, self).get_context_data(**kwargs)
-        context['webpage'] = WebPage.objects.get(slug=self.slug)
+        context['webpage'] = get_object_or_404(WebPage, slug=self.slug)
         return context
 
     @atomic
@@ -90,5 +90,8 @@ class CarouselEditView(UpdateView):
     def get_context_data(self, **kwargs):
         pk = self.kwargs['pk']
         context = super(CarouselEditView, self).get_context_data(**kwargs)
-        context['webpage'] = Carousel.objects.get(pk=pk).webpage
+        context['Carousel'] = get_object_or_404(Carousel,pk=pk)
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('Carousel.edit', kwargs={'pk':self.kwargs['pk']})

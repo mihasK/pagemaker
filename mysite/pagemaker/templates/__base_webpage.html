@@ -28,7 +28,7 @@
                         <li>
                             <a href="#">Menu</a>
                         </li>
-                        {% for gadget in gadgets %}
+                        {% for gadget in webpage.gadgets_set.all %}
                         <li>
                             <a href="{% url gadget.type|add:".edit" gadget.identifier %}">{{ gadget.type }}</a>
                         </li>

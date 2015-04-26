@@ -1,10 +1,21 @@
 {%  extends '__base_carousel.html' %}
+{% load bootstrap %}
 
 {% block main_content_area %}
 
     <div id="page-wrapper">
-
-
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {{ Carousel.title }}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    {{ form | bootstrap }}
+                     <input type="submit" class="button" value="Submit"/>
+                </form>
+            </div>
+        </div>
     </div>
 
 
