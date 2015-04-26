@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'bootstrapform',
     'colorful',
+    'debug_toolbar',
     'embed_video',
     'south',
     'pagemaker',
