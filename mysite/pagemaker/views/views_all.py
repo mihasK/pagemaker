@@ -96,23 +96,22 @@ class CarouselDeleteView(BaseCarouselView, DeleteView):
 class SlideAddView(CreateView):
     form_class = SlideAddForm
     template_name = 'slide_add.html'
-    '''
-     def dispatch(self, request, *args, **kwargs):
-        self.pk = self.kwargs['pk']
-        self.webpage = get_object_or_404(WebPage, pk=self.pk)
-        return super(CarouselAddView, self).dispatch(request, *args, **kwargs)
+
+    def dispatch(self, request, *args, **kwargs):
+        self.carousel_pk = self.kwargs['carousel_pk']
+        self.carousel = get_object_or_404(Carousel, pk=self.carousel_pk)
+        return super(SlideAddView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(CarouselAddView, self).get_context_data(**kwargs)
-        context['webpage'] = self.webpage
+        context = super(SlideAddView, self).get_context_data(**kwargs)
+        context['object'] = self.carousel
+        context['slides'] = Slide.objects.filter(carousel_pk = self.carousel_pk)
         return context
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.webpage_id = self.kwargs['pk']
-        obj.order = 0
-        return super(CarouselAddView, self).form_valid(form)
+        obj.carousel_id = self.kwargs['carousel_pk']
+        return super(SlideAddView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'pk':self.pk})
-    '''
+        return reverse_lazy('carousel.edit', kwargs={'carousel_pk':self.carousel_pk})

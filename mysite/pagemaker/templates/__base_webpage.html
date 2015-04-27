@@ -28,19 +28,19 @@
                         <li>
                             <a href="#">Menu</a>
                         </li>
-                        {% for gadget in webpage.carousel_set.all %}
+                        {% for carousel in webpage.carousel_set.all %}
                         <li>
-                            <a href="{% url 'carousel.edit' gadget.pk %}">Carousel: {{ gadget.title }}</a>
+                            <a href="{% url 'carousel.edit' carousel.pk %}">Carousel: {{ carousel.title }}</a>
                         </li>
                         {% endfor %}
-                        {% for gadget in webpage.headericons_set.all %}
+                        {% for headericons in webpage.headericons_set.all %}
                         <li>
-                            <a href="{% url 'headericons.edit' gadget.pk %}">HeaderIcons: {{ gadget.title }}</a>
+                            <a href="{% url 'headericons.edit' headericons.pk %}">HeaderIcons: {{ headericons.title }}</a>
                         </li>
                         {% endfor %}
-                        {% for gadget in webpage.MediaFeature_set.all %}
+                        {% for mediafeature in webpage.MediaFeature_set.all %}
                         <li>
-                            <a href="{% url 'mediafeature.edit' gadget.pk %}">MediaFeature: {{ gadget.title }}</a>
+                            <a href="{% url 'mediafeature.edit' mediafeature.pk %}">MediaFeature: {{ mediafeature.title }}</a>
                         </li>
                         {% endfor %}
 
