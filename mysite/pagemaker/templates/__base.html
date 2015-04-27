@@ -29,9 +29,6 @@
         <!-- Custom Fonts -->
         <link href={% static "bower_components/fontawesome/css/font-awesome.min.css" %} rel="stylesheet" type="text/css">
 
-        <style>
-            {{ school.custom_css }}
-        </style>
     {% endblock css_files %}
 
     {% block js_files %}
@@ -49,7 +46,7 @@
 
     <body>
 
-    <div id="wrapper">
+
 
     {% block left_sidebar %} {% endblock left_sidebar %}
 
@@ -57,7 +54,7 @@
 
     {% block footer %}{% endblock footer %}
 
-    </div> <!-- end wrapper -->
+
 
     {% block js_files_bottom %}
         <!-- Bootstrap Core JavaScript -->
