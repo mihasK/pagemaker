@@ -15,3 +15,9 @@ class CarouselAddForm(forms.ModelForm):
 
         fields = ['title']
 
+
+class SlideAddForm(forms.ModelForm):
+    class Meta:
+        model = Slide
+
+        fields = ['title', 'description']

@@ -75,7 +75,7 @@ class Slide(models.Model):
     bg_image =  ContentTypeRestrictedFileField(upload_to=get_image_path, blank=True,
                   max_upload_size = 5000000,content_types= settings.SUPPORTED_IMAGE_MIME_TYPES)
 
-    sequence = models.IntegerField(unique=True) #order of display inside carousel
+    #sequence = models.IntegerField(unique=True) #TODO tk add order of display inside carousel
     carousel = models.ForeignKey(Carousel, related_name = 'Slide')
 
 
