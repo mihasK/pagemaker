@@ -9,4 +9,5 @@ urlpatterns = patterns('pagemaker.views',
     url(r'^(?P<pk>\d+)/$', WebPageEditView.as_view(), name='webpage.edit'),
     url(r'^(?P<pk>\d+)/carousel/add/$', CarouselAddView.as_view(), name='Carousel.add'),
     url(r'^(?P<pk>\d+)/carousel/edit/$', CarouselEditView.as_view(), name='Carousel.edit'),
+    url(r'^(?P<pk>\d+)/carousel/delete/$', CarouselDeleteView.as_view(), name='Carousel.delete'),
 )

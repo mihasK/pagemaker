@@ -71,3 +71,22 @@ class CarouselEditView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('Carousel.edit', kwargs={'pk':self.kwargs['pk']})
+
+
+class CarouselDeleteView(DeleteView):
+    model = Carousel
+    template_name = 'carousel_confirm_delete.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = self.kwargs['pk']
+        self.carousel = get_object_or_404(Carousel, pk=self.pk)
+        self.webpage = self.carousel.webpage
+        return super(CarouselDeleteView, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(CarouselDeleteView, self).get_context_data(**kwargs)
+        context['webpage'] = self.webpage
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy('webpage.edit', kwargs={'pk':self.webpage.pk})
