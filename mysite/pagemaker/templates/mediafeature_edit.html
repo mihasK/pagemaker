@@ -13,6 +13,7 @@
                     {{ form.non_field_errors }}
                     {{ form | bootstrap }}
                      <input type="submit" class="button" value="Submit"/>
+                     <a href={% url 'mediafeature.delete' webpage.pk mediafeature.pk %}>Delete</a>
                 </form>
             </div>
         </div>

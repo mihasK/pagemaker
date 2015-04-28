@@ -118,3 +118,11 @@ class MediaFeatureEditView(BaseMediaFeatureView, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
+
+
+class MediaFeatureDeleteView(BaseMediaFeatureView, DeleteView):
+    model = MediaFeature
+    template_name = 'mediafeature_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage.pk})

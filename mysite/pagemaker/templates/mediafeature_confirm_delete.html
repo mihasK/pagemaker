@@ -1,0 +1,13 @@
+{% extends '__base_webpage.html' %}
+
+{% block main_content_area %}
+
+    <div id="page-wrapper">
+        <form action="" method="post">
+            {% csrf_token %}
+            <p>Are you sure you want to delete MediaFeature: "{{ object.title }}"?</p>
+            <input type="submit" value="Confirm" />
+        </form>
+    </div>
+
+{% endblock %}
