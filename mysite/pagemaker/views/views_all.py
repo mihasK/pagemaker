@@ -37,26 +37,16 @@ class WebPageEditView(BaseWebPageView, UpdateView):
     template_name = 'webpage_edit.html'
 
     def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'pk':self.kwargs['pk']})
+        return reverse_lazy('webpage.edit', kwargs={'pk':self.kwargs['webpage_pk']})
 
 
 class CarouselAddView(BaseCarouselView, CreateView):
     form_class = CarouselAddForm
     template_name = 'carousel_add.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        self.webpage_pk = self.kwargs['webpage_pk']
-        self.webpage = get_object_or_404(WebPage, pk=self.webpage_pk)
-        return super(CarouselAddView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(CarouselAddView, self).get_context_data(**kwargs)
-        context['webpage'] = self.webpage
-        return context
-
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.webpage_id = self.kwargs['webpage_pk']
+        obj.webpage_id = self.webpage_pk
         obj.order = 0
         return super(CarouselAddView, self).form_valid(form)
 
@@ -77,17 +67,6 @@ class CarouselEditView(BaseCarouselView, UpdateView):
 class CarouselDeleteView(BaseCarouselView, DeleteView):
     model = Carousel
     template_name = 'carousel_confirm_delete.html'
-
-    def dispatch(self, request, *args, **kwargs):
-        self.carousel_pk = self.kwargs['carousel_pk']
-        self.carousel = get_object_or_404(Carousel, pk=self.carousel_pk)
-        self.webpage = self.carousel.webpage
-        return super(CarouselDeleteView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(CarouselDeleteView, self).get_context_data(**kwargs)
-        context['webpage'] = self.webpage
-        return context
 
     def get_success_url(self):
         return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage.pk})
@@ -115,3 +94,27 @@ class SlideAddView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('carousel.edit', kwargs={'carousel_pk':self.carousel_pk})
+
+
+class MediaFeatureAddView(BaseMediaFeatureView, CreateView):
+    form_class = MediaFeatureAddForm
+    template_name = 'mediafeature_add.html'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.webpage_id = self.webpage_pk
+        obj.order = 0
+        return super(MediaFeatureAddView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
+
+
+class MediaFeatureEditView(BaseMediaFeatureView, UpdateView):
+    model = MediaFeature
+    fields = ['title', 'description']
+    form_class = MediaFeatureAddForm
+    template_name = 'mediafeature_edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})

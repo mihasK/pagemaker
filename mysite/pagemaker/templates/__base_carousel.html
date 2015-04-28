@@ -10,7 +10,7 @@
                     <a href="{% url 'webpage.edit' object.webpage.pk %}">Back to Gadgets</a>
                 </li>
                 <li>
-                    <a href="{% url 'slide.add' object.pk %}">Add New Slide</a>
+                    <a href="{% url 'slide.add' object.webpage.pk object.pk %}">Add New Slide</a>
                 </li>
                 <li>Current Slides</li>
                 {% for slide in object.slide_set.all %}
@@ -19,7 +19,7 @@
                 </li>
                 {% endfor %}
                 <li>
-                    <a href="{% url 'carousel.delete' object.pk %}">Delete Carousel</a>
+                    <a href="{% url 'carousel.delete' object.webpage.pk object.pk %}">Delete Carousel</a>
                 </li>
             </ul>
         </div>

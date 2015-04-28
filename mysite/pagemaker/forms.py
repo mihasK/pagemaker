@@ -21,3 +21,10 @@ class SlideAddForm(forms.ModelForm):
         model = Slide
 
         fields = ['title', 'description']
+
+
+class MediaFeatureAddForm(forms.ModelForm):
+    class Meta:
+        model = MediaFeature
+
+        fields = ['title', 'description']
