@@ -15,6 +15,10 @@ urlpatterns = patterns('pagemaker.views',
     url(r'^(?P<webpage_pk>\d+)/(?P<carousel_pk>\d+)/carousel/slide/add/$', SlideAddView.as_view(), name='slide.add'),
 
     url(r'^(?P<webpage_pk>\d+)/headingicons/add/$', HeadingIconsAddView.as_view(), name='headingicons.add'),
+    url(r'^(?P<webpage_pk>\d+)/(?P<headingicons_pk>\d+)/headingicons/edit/$', HeadingIconsEditView.as_view(),
+        name='headingicons.edit'),
+    url(r'^(?P<webpage_pk>\d+)/(?P<headingicons_pk>\d+)/headingicons/delete/$', HeadingIconsDeleteView.as_view(),
+        name='headingicons.delete'),
 
     url(r'^(?P<webpage_pk>\d+)/mediafeature/add/$', MediaFeatureAddView.as_view(), name='mediafeature.add'),
     url(r'^(?P<webpage_pk>\d+)/(?P<mediafeature_pk>\d+)/mediafeature/edit/$', MediaFeatureEditView.as_view(),

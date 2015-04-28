@@ -7,19 +7,19 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="{% url 'webpage.list' %}">Webpage List</a>
+                    <a href={% url 'webpage.list' %}>Webpage List</a>
                 </li>
                 <li>
                     <a href="">Add New Gadget<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{% url 'carousel.add' webpage.pk %}">Carousel</a>
+                            <a href={% url 'carousel.add' webpage.pk %}>Carousel</a>
                         </li>
                         <li>
-                            <a href="{% url 'headingicons.add' webpage.pk %}">HeadingIcons</a>
+                            <a href={% url 'headingicons.add' webpage.pk %}>HeadingIcons</a>
                         </li>
                         <li>
-                            <a href="{% url 'mediafeature.add' webpage.pk %}">MediaFeature</a>
+                            <a href={% url 'mediafeature.add' webpage.pk %}>MediaFeature</a>
                         </li>
                     </ul>
                 </li>
@@ -30,24 +30,24 @@
                         </li>
                         {% for carousel in webpage.carousel_set.all %}
                         <li>
-                            <a href="{% url 'carousel.edit' webpage.pk carousel.pk %}">Carousel: {{ carousel.title }}</a>
+                            <a href={% url 'carousel.edit' webpage.pk carousel.pk %}>Carousel: {{ carousel.title }}</a>
                         </li>
                         {% endfor %}
                         {% for headingicons in webpage.headingicons_set.all %}
                         <li>
-                            <a href="">HeadingIcons: {{ headingicons.title }}</a>
+                            <a href={% url 'headingicons.edit' webpage.pk headingicons.pk %}>HeadingIcons: {{ headingicons.title }}</a>
                         </li>
                         {% endfor %}
                         {% for mediafeature in webpage.mediafeature_set.all %}
                         <li>
-                            <a href="{% url 'mediafeature.edit' webpage.pk mediafeature.pk %}">MediaFeature: {{ mediafeature.title }}</a>
+                            <a href={% url 'mediafeature.edit' webpage.pk mediafeature.pk %}>MediaFeature: {{ mediafeature.title }}</a>
                         </li>
                         {% endfor %}
 
                     </ul>
                 </li>
                 <li>
-                    <a href="{% url 'webpage.delete' webpage.pk %}">Delete Webpage</a>
+                    <a href={% url 'webpage.delete' webpage.pk %}>Delete Webpage</a>
                 </li>
             </ul>
         </div>

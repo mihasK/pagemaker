@@ -120,3 +120,14 @@ class HeadingIconsAddView(BaseHeadingIconsView, CreateView):
         obj.order = 0
         return super(HeadingIconsAddView, self).form_valid(form)
 
+
+class HeadingIconsEditView(BaseHeadingIconsView, UpdateView):
+    model = HeadingIcons
+    fields = ['title', 'description', 'title1', 'description1', 'title2', 'description2']
+    form_class = HeadingIconsAddForm
+    template_name = 'headingicons_edit.html'
+
+
+class HeadingIconsDeleteView(BaseHeadingIconsView, DeleteView):
+    model = HeadingIcons
+    template_name = 'headingicons_confirm_delete.html'
