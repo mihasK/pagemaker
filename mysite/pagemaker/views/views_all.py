@@ -36,9 +36,6 @@ class WebPageEditView(BaseWebPageView, UpdateView):
     form_class = WebPageAddForm
     template_name = 'webpage_edit.html'
 
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'pk':self.kwargs['webpage_pk']})
-
 
 class CarouselAddView(BaseCarouselView, CreateView):
     form_class = CarouselAddForm
@@ -49,9 +46,6 @@ class CarouselAddView(BaseCarouselView, CreateView):
         obj.webpage_id = self.webpage_pk
         obj.order = 0
         return super(CarouselAddView, self).form_valid(form)
-
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
 
 
 class CarouselEditView(BaseCarouselView, UpdateView):
@@ -67,9 +61,6 @@ class CarouselEditView(BaseCarouselView, UpdateView):
 class CarouselDeleteView(BaseCarouselView, DeleteView):
     model = Carousel
     template_name = 'carousel_confirm_delete.html'
-
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage.pk})
 
 
 class SlideAddView(CreateView):
@@ -106,9 +97,6 @@ class MediaFeatureAddView(BaseMediaFeatureView, CreateView):
         obj.order = 0
         return super(MediaFeatureAddView, self).form_valid(form)
 
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
-
 
 class MediaFeatureEditView(BaseMediaFeatureView, UpdateView):
     model = MediaFeature
@@ -116,13 +104,19 @@ class MediaFeatureEditView(BaseMediaFeatureView, UpdateView):
     form_class = MediaFeatureAddForm
     template_name = 'mediafeature_edit.html'
 
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
-
 
 class MediaFeatureDeleteView(BaseMediaFeatureView, DeleteView):
     model = MediaFeature
     template_name = 'mediafeature_confirm_delete.html'
 
-    def get_success_url(self):
-        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage.pk})
+
+class HeadingIconsAddView(BaseHeadingIconsView, CreateView):
+    form_class = HeadingIconsAddForm
+    template_name = 'headingicons_add.html'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.webpage_id = self.webpage_pk
+        obj.order = 0
+        return super(HeadingIconsAddView, self).form_valid(form)
+

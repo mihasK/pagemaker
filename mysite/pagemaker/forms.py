@@ -23,6 +23,13 @@ class SlideAddForm(forms.ModelForm):
         fields = ['title', 'description']
 
 
+class HeadingIconsAddForm(forms.ModelForm):
+    class Meta:
+        model = HeadingIcons
+
+        fields = ['title', 'description', 'title1', 'description1', 'title2', 'description2']
+
+
 class MediaFeatureAddForm(forms.ModelForm):
     class Meta:
         model = MediaFeature

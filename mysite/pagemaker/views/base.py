@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 
@@ -15,6 +16,10 @@ class BaseView(View):
         context = super(BaseView, self).get_context_data(**kwargs)
         context['webpage'] = self.webpage
         return context
+
+    def get_success_url(self):
+        return reverse_lazy('webpage.edit', kwargs={'webpage_pk':self.webpage_pk})
+
 
 
 class BaseWebPageView(View):

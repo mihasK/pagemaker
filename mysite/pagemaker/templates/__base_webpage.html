@@ -16,7 +16,7 @@
                             <a href="{% url 'carousel.add' webpage.pk %}">Carousel</a>
                         </li>
                         <li>
-                            <a href="#">HeadingIcons</a>
+                            <a href="{% url 'headingicons.add' webpage.pk %}">HeadingIcons</a>
                         </li>
                         <li>
                             <a href="{% url 'mediafeature.add' webpage.pk %}">MediaFeature</a>
@@ -33,9 +33,9 @@
                             <a href="{% url 'carousel.edit' webpage.pk carousel.pk %}">Carousel: {{ carousel.title }}</a>
                         </li>
                         {% endfor %}
-                        {% for headericons in webpage.headericons_set.all %}
+                        {% for headingicons in webpage.headingicons_set.all %}
                         <li>
-                            <a href="">HeaderIcons: {{ headericons.title }}</a>
+                            <a href="">HeadingIcons: {{ headingicons.title }}</a>
                         </li>
                         {% endfor %}
                         {% for mediafeature in webpage.mediafeature_set.all %}
