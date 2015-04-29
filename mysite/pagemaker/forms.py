@@ -35,3 +35,7 @@ class MediaFeatureAddForm(forms.ModelForm):
         model = MediaFeature
 
         fields = ['title', 'description']
+
+        widgets = {'title':forms.HiddenInput(attrs={'class':'mediafeature_title'}),
+                   'description':forms.HiddenInput(attrs={'class':'mediafeature_description'})
+                   }

@@ -1,6 +1,74 @@
 {% extends '__base_webpage.html' %}
 {% load bootstrap %}
 
+{% block js_files %}
+    {{ block.super }}
+    <script src={% static "js/summernote/summernote.min.js" %}></script>
+    <script src={% static "js/education/edit_school_footer.js" %}></script>
+    <script>
+        $(document).ready(function() {
+
+            /**
+             * Shows the correct number of columns
+             */
+            function showColumns(column_number){
+                all_columns = $('.column-editor-container');
+                all_columns.hide();
+                columns_to_show = all_columns.slice(0, column_number);
+                columns_to_show.show();
+            }
+
+            function changeColumnWidth(column_number){
+                visible_columns = $('.column-editor-container:visible');
+                visible_columns.attr('class','column-editor-container');
+                switch(column_number){
+                    case 1:
+                        visible_columns.toggleClass('col-md-12');
+                        break;
+                    case 2:
+                        visible_columns.toggleClass('col-md-6');
+                        break;
+                    case 3:
+                        visible_columns.toggleClass('col-md-4');
+                        break;
+                    case 4:
+                        visible_columns.toggleClass('col-md-3');
+                        break;
+                }
+            }
+            /**
+             * Changes how many footer column forms are shown in the footer.
+             * @param column_number
+             */
+            function changeColumns(column_number){
+                showColumns(column_number);
+                changeColumnWidth(column_number);
+            }
+
+            $('.summernote').summernote({
+              airMode: true,
+                onChange: function(contents, $editable) {
+{#                    console.log($editable);#}
+{#                    console.log(contents);#}
+{#                    $editable.siblings('.content').val(contents);#}
+                }
+            });
+
+
+            $('.summernote').each(function(){
+                $(this).code($(this).siblings('.content').val());
+
+            });
+
+        });
+    </script>
+{% endblock js_files %}
+
+{% block css_files %}
+    {{ block.super }}
+    <link href={% static "js/summernote/summernote.css" %} rel="stylesheet">
+{% endblock css_files %}
+
 
 {% block main_content_area %}
 

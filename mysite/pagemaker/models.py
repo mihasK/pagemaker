@@ -80,8 +80,8 @@ class Slide(models.Model):
 
 
 class MediaFeature(Gadget):
-    title = models.CharField(max_length=127, blank=True)
-    description = models.TextField(blank=True)
+    title = models.CharField(max_length=127, default='Edit Title', blank=True)
+    description = models.TextField(default='Edit Description', blank=True)
 
     image = ContentTypeRestrictedFileField(upload_to=get_image_path, blank=True,
                 max_upload_size = 5000000,content_types= settings.SUPPORTED_IMAGE_MIME_TYPES)
