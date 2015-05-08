@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'embed_video',
     'south',
     'pagemaker',
+    'media_upload'
 )
 
 MIDDLEWARE_CLASSES = (

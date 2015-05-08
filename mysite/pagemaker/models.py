@@ -5,7 +5,7 @@ from django.template.defaultfilters import slugify
 from colorful.fields import RGBColorField
 from embed_video.fields import EmbedVideoField
 from .formatChecker import ContentTypeRestrictedFileField
-
+from media_upload.models import Media
 
 def get_media_image_path(instance, filename):#todo rmw: there has to be a better way
     return os.path.join(str(instance.webpage.pk), 'images', str(instance.pk),filename)
@@ -79,19 +79,12 @@ class Slide(models.Model):
     carousel = models.ForeignKey(Carousel, related_name = 'Slide')
 
 
-class MediaFeature(Gadget):
+class MediaFeature(Gadget, Media):
     title = models.CharField(max_length=127, default='Edit Title', blank=True)
     description = models.TextField(default='Edit Description', blank=True)
-
-    image = ContentTypeRestrictedFileField(upload_to=get_image_path, blank=True,
-                max_upload_size = 5000000,content_types= settings.SUPPORTED_IMAGE_MIME_TYPES)
-    video= ContentTypeRestrictedFileField(upload_to=get_media_video_path,blank=True,
-                max_upload_size = 50242880,content_types=settings.SUPPORTED_VIDEO_MIME_TYPES,
-                                          default = 'static/default/default.ogv')
-    video_needs_transcode = models.BooleanField(default=False)
-    embedded_video = EmbedVideoField(blank=True)
     left_media = models.BooleanField(default=False) # display image/video on left side
-
+    paths = ['mediafeature']
+    base_path_pk_lookup = ['mediafeature','webpage','pk']
 
 
 class HeadingIcons(Gadget):

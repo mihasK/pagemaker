@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.db.transaction import atomic
 from django.db.models import Max
+from django import forms
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import CreateView, DetailView, DeleteView, UpdateView, TemplateView
 
@@ -8,6 +9,7 @@ from pagemaker.views.base import *
 from pagemaker.forms import *
 from pagemaker.models import *
 
+from media_upload.views import MediaCreateView,MediaUpdateView
 
 # Create your views here.
 def demo(request):
@@ -87,9 +89,18 @@ class SlideAddView(CreateView):
         return reverse_lazy('carousel.edit', kwargs={'carousel_pk':self.carousel_pk})
 
 
-class MediaFeatureAddView(BaseMediaFeatureView, CreateView):
-    form_class = MediaFeatureAddForm
+class MediaFeatureAddView(BaseMediaFeatureView, MediaCreateView):
     template_name = 'mediafeature_add.html'
+    model = MediaFeature
+    form_fields = ['title', 'description']
+    form_widgets = {'title':forms.HiddenInput(attrs={'class':'mediafeature_title'}),
+                   'description':forms.HiddenInput(attrs={'class':'mediafeature_description'})
+                   }
+
+    def get_context_data(self, **kwargs):
+        context = super(MediaFeatureAddView, self).get_context_data(**kwargs)
+        context['form_url'] = self.request.path
+        return context
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -97,13 +108,24 @@ class MediaFeatureAddView(BaseMediaFeatureView, CreateView):
         obj.order = 0
         return super(MediaFeatureAddView, self).form_valid(form)
 
+    def get_success_url(self):
+        return reverse('mediafeature.edit', kwargs={'webpage_pk': self.kwargs['webpage_pk'],
+                                                    'mediafeature_pk':self.object.pk})
 
-class MediaFeatureEditView(BaseMediaFeatureView, UpdateView):
+
+class MediaFeatureEditView(BaseMediaFeatureView, MediaUpdateView):
     model = MediaFeature
     fields = ['title', 'description']
-    form_class = MediaFeatureAddForm
     template_name = 'mediafeature_edit.html'
+    form_fields = ['title', 'description']
+    form_widgets = {'title':forms.HiddenInput(attrs={'class':'mediafeature_title'}),
+                   'description':forms.HiddenInput(attrs={'class':'mediafeature_description'})
+                   }
 
+    def get_context_data(self, **kwargs):
+        context = super(MediaFeatureEditView, self).get_context_data(**kwargs)
+        context['form_url'] = self.request.path
+        return context
 
 class MediaFeatureDeleteView(BaseMediaFeatureView, DeleteView):
     model = MediaFeature

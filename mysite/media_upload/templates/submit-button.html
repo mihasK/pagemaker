@@ -1,0 +1,13 @@
+<button id="submit-media-forms" type="submit">Submit</button>
+
+<script>
+    $('#submit-media-forms').click(function(event) {
+    event.preventDefault();
+
+    $('.media-form').ajaxForm(function () {
+        myDropzone.processQueue();
+    });
+
+    $('.media-form').submit();
+});
+</script>

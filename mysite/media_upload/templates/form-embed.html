@@ -1,0 +1,8 @@
+<form  class='video-embed-form media-form' enctype="multipart/form-data" action="{{ form_url }}" method="POST" role="form">
+    {% csrf_token %}
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+    {{ form.embedded_video }}
+    <input type="submit" name="embed_video" value = "Embed This Video"/>
+    <input type="submit" name="delete_embed_video" value="Delete This Video"/>
+</form>

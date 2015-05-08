@@ -1,65 +1,17 @@
 {% extends '__base_webpage.html' %}
 {% load bootstrap %}
+{% load static from staticfiles %}
 
 {% block js_files %}
     {{ block.super }}
     <script src={% static "js/summernote/summernote.min.js" %}></script>
-    <script src={% static "js/education/edit_school_footer.js" %}></script>
+    <script src={% static "js/summernote/plugin/summernote-ext-fontstyle.js" %}></script>
+    <script src={% static "js/dropzone.min.js" %}></script>
+    <script src={% static "js/summernote/summernote-air.js" %}></script>
     <script>
         $(document).ready(function() {
-
-            /**
-             * Shows the correct number of columns
-             */
-            function showColumns(column_number){
-                all_columns = $('.column-editor-container');
-                all_columns.hide();
-                columns_to_show = all_columns.slice(0, column_number);
-                columns_to_show.show();
-            }
-
-            function changeColumnWidth(column_number){
-                visible_columns = $('.column-editor-container:visible');
-                visible_columns.attr('class','column-editor-container');
-                switch(column_number){
-                    case 1:
-                        visible_columns.toggleClass('col-md-12');
-                        break;
-                    case 2:
-                        visible_columns.toggleClass('col-md-6');
-                        break;
-                    case 3:
-                        visible_columns.toggleClass('col-md-4');
-                        break;
-                    case 4:
-                        visible_columns.toggleClass('col-md-3');
-                        break;
-                }
-            }
-            /**
-             * Changes how many footer column forms are shown in the footer.
-             * @param column_number
-             */
-            function changeColumns(column_number){
-                showColumns(column_number);
-                changeColumnWidth(column_number);
-            }
-
-            $('.summernote').summernote({
-              airMode: true,
-                onChange: function(contents, $editable) {
-{#                    console.log($editable);#}
-{#                    console.log(contents);#}
-{#                    $editable.siblings('.content').val(contents);#}
-                }
-            });
-
-
-            $('.summernote').each(function(){
-                $(this).code($(this).siblings('.content').val());
-
-            });
-
+            input_to_summernote([['.summernote-title', ' form > .mediafeature_title'],
+                ['.summernote-description', 'form > .mediafeature_description']]);
         });
     </script>
 {% endblock js_files %}
@@ -67,6 +19,8 @@
 {% block css_files %}
     {{ block.super }}
     <link href={% static "js/summernote/summernote.css" %} rel="stylesheet">
+    <link href={% static "css/dropzone/dropzone.css" %} rel="stylesheet">
+    <link href={% static "css/media-feature.css" %} rel="stylesheet">
 {% endblock css_files %}
 
 
@@ -74,18 +28,54 @@
 
 
     <div id="page-wrapper">
+        <div class="spacer-height-50px"></div>
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <form action="" method="POST">
+            <div class="col-md-7">
+                <div class="featurette-wrapper">
+                    <div class='summernote summernote-title'></div>
+                    <div class='summernote summernote-description'></div>
+                    <form id="mediafeature-form" action="{{ form_url }}" method="POST">
+                        {% csrf_token %}
+                        {{ form.errors }}
+                        {{ form.non_field_errors }}
+                        {{ form.title }}
+                        {{ form.description }}
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <form id="mediafeature-media-form" class ="dropzone" action="{{ form_url }}" method="POST">
                     {% csrf_token %}
-                    {{ form.errors }}
-                    {{ form.non_field_errors }}
-                    {{ form | bootstrap }}
-                     <input type="submit" class="button" value="Submit"/>
                 </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+                <button id="submit-media-forms" class="btn btn-default" type="submit">Submit</button>
             </div>
         </div>
     </div>
 
 
 {% endblock main_content_area %}
+
+{% block js_files_bottom %}
+    {{ block.super }}
+    <script src={% static "js/dropzone-settings.js" %}></script>
+    <script src={% static "js/jquery.form.js" %}></script>
+    <script src={% static "js/csrf.js" %}></script>
+
+    <script>
+        $('#submit-media-forms').click(function(event) {
+
+
+            $('#mediafeature-media-form').ajaxForm(function () {
+                myDropzone.processQueue();
+            });
+
+            $('#mediafeature-form').submit();
+
+
+        });
+    </script>
+{% endblock js_files_bottom %}
