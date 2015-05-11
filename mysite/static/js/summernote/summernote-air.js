@@ -41,6 +41,7 @@ $(document).ready(function() {
 
         $.each(selectors_list, function(){
            $(this[1]).val($(this[0]).code());
+
         });
     }
 
