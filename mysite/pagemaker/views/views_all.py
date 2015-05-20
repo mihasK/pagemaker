@@ -37,6 +37,12 @@ class WebPageEditView(BaseWebPageView, UpdateView):
     template_name = 'webpage_edit.html'
 
 
+class WebPageEditGadgetsView(BaseWebPageView, UpdateView):
+    model = WebPage
+    form_class = WebPageAddForm
+    template_name = 'webpage_gadgets.html'
+
+
 class CarouselAddView(BaseCarouselView, CreateView):
     form_class = CarouselAddForm
     template_name = 'carousel_add.html'

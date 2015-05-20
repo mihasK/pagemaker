@@ -1,0 +1,24 @@
+{%  extends '__base_webpage.html' %}
+{%  load bootstrap %}
+
+
+{% block main_content_area %}
+
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {{ object.title }}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.non_field_errors }}
+                    {{ form | bootstrap }}
+                     <input type="submit" class="button" value="Submit"/>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+
+{% endblock main_content_area %}
